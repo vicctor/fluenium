@@ -6,9 +6,9 @@
         <artifactId>fluenium-project</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>org.fluenim</groupId>
+    <groupId>org.fluenium</groupId>
     <artifactId>fluenium-core</artifactId>
-    <version>1.21.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     
     <dependencies>
