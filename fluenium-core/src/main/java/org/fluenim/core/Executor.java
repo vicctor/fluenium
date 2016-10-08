@@ -251,6 +251,11 @@ public class Executor {
         return new PageChecker();
     }
 
+    public PageFollower open(final String link) {
+        driver.get(link);
+        return new PageFollower();
+    }
+        
     public static Executor using(WebDriver driver) {
         return new Executor(driver);
     }
