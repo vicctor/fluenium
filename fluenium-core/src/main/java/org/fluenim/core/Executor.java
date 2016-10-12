@@ -16,11 +16,11 @@ public class Executor {
 
     public class PageFollower {
 
-        Executor then() {
+        public Executor then() {
             return Executor.this;
         }
 
-        Executor then(final String whatAbout) {
+        public Executor then(final String whatAbout) {
             return Executor.this;
         }
     }
@@ -40,7 +40,7 @@ public class Executor {
         }
     }
 
-    class Timed<T> {
+    public class Timed<T> {
 
         private int timeout = 10;
 
@@ -54,7 +54,7 @@ public class Executor {
         }
     }
 
-    class PageChecker extends Timed<PageChecker> {
+    public class PageChecker extends Timed<PageChecker> {
 
         public PageFollower titleStartsWith(final String title) {
             until((ExpectedCondition<Boolean>) (WebDriver d) -> d.getTitle().startsWith(title));
