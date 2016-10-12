@@ -33,7 +33,7 @@ public class Executor {
             this.xpath = xpath;
         }
 
-        Action so() {
+        public Action so() {
             Action action = new Action();
             action.setXPath(xpath);
             return action;
