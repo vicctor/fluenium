@@ -1,6 +1,8 @@
 package org.fluenim.core;
 
 import com.google.common.base.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -72,10 +74,13 @@ public class Executor {
         private String xpath;
 
         public class AttributeMatcher {
+
             final String attributeName;
+
             public AttributeMatcher(String attributeName) {
                 this.attributeName = attributeName;
             }
+
             ElementChecker matches(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
@@ -85,6 +90,7 @@ public class Executor {
                 );
                 return ElementChecker.this;
             }
+
             ElementChecker extsts(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
@@ -95,10 +101,12 @@ public class Executor {
                 return ElementChecker.this;
             }
         }
-        
+
         public class TextMatcher {
+
             public TextMatcher() {
             }
+
             ElementChecker matches(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
@@ -108,6 +116,7 @@ public class Executor {
                 );
                 return ElementChecker.this;
             }
+
             ElementChecker extsts(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
@@ -217,6 +226,7 @@ public class Executor {
         public XPathSelector<T> tag(final String elementType) {
             return new XPathSelector<T>(elementType, action);
         }
+
     }
 
     private Executor(WebDriver driver) {
@@ -255,8 +265,17 @@ public class Executor {
         driver.get(link);
         return new PageFollower();
     }
-        
+
     public static Executor using(WebDriver driver) {
         return new Executor(driver);
+    }
+
+    public PageFollower pause(int delay) {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Executor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new PageFollower();
     }
 }
