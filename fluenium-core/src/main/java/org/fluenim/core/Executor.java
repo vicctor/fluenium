@@ -278,4 +278,9 @@ public class Executor {
         }
         return new PageFollower();
     }
+    
+     public PageFollower maximize() {
+       driver.manage().window().maximize();
+        return new PageFollower();
+    }
 }
