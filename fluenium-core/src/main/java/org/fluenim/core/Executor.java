@@ -23,6 +23,7 @@ public class Executor {
         }
 
         public Executor then(final String whatAbout) {
+            System.out.print(whatAbout);
             return Executor.this;
         }
     }
@@ -60,6 +61,7 @@ public class Executor {
 
         public PageFollower titleStartsWith(final String title) {
             until((ExpectedCondition<Boolean>) (WebDriver d) -> d.getTitle().startsWith(title));
+            System.out.println(" - element found");
             return new PageFollower();
         }
     }
@@ -137,6 +139,7 @@ public class Executor {
             until((ExpectedCondition<Boolean>) (WebDriver d)
                     -> d.findElement(By.xpath(this.xpath)).isDisplayed()
             );
+            System.out.println("  - element found");
             return new Follower(xpath);
         }
 
