@@ -1,6 +1,7 @@
 package org.fluenim.core;
 
 import com.google.common.base.Function;
+import java.io.Console;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openqa.selenium.By;
@@ -23,6 +24,7 @@ public class Executor {
         }
 
         public Executor then(final String whatAbout) {
+            System.out.println(" ");
             System.out.print(whatAbout);
             return Executor.this;
         }
@@ -61,7 +63,7 @@ public class Executor {
 
         public PageFollower titleStartsWith(final String title) {
             until((ExpectedCondition<Boolean>) (WebDriver d) -> d.getTitle().startsWith(title));
-            System.out.println(" - element found");
+            System.out.print(" - element found");
             return new PageFollower();
         }
     }
@@ -83,17 +85,17 @@ public class Executor {
                 this.attributeName = attributeName;
             }
 
-            ElementChecker matches(final String regexp) {
+            public ElementChecker matches(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
                     String text = d.findElement(By.xpath(xpath)).getAttribute(attributeName);
-                    return text != null ? d.findElement(By.xpath(xpath)).getText().matches(regexp) : regexp == text;
+                    return text != null ? text.matches(regexp) : regexp == text;
                 }
                 );
                 return ElementChecker.this;
             }
 
-            ElementChecker extsts(final String regexp) {
+            public ElementChecker extsts(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
                     String text = d.findElement(By.xpath(xpath)).getAttribute(attributeName);
@@ -109,24 +111,24 @@ public class Executor {
             public TextMatcher() {
             }
 
-            ElementChecker matches(final String regexp) {
+            public Follower matches(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
                     String text = d.findElement(By.xpath(xpath)).getText();
                     return text != null ? d.findElement(By.xpath(xpath)).getText().matches(regexp) : regexp == text;
                 }
                 );
-                return ElementChecker.this;
+                return new Follower(xpath);
             }
 
-            ElementChecker extsts(final String regexp) {
+            public Follower extsts(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
                     String text = d.findElement(By.xpath(xpath)).getText();
                     return text != null;
                 }
                 );
-                return ElementChecker.this;
+                return new Follower(xpath);
             }
         }
 
@@ -139,7 +141,7 @@ public class Executor {
             until((ExpectedCondition<Boolean>) (WebDriver d)
                     -> d.findElement(By.xpath(this.xpath)).isDisplayed()
             );
-            System.out.println("  - element found");
+            System.out.print("  - element found");
             return new Follower(xpath);
         }
 
@@ -178,6 +180,7 @@ public class Executor {
         }
 
         public Follower clickIt() {
+            System.out.print(" and clicked");
             driver.findElement(By.xpath(this.xpath)).click();
             return new Follower(xpath);
         }
@@ -281,9 +284,9 @@ public class Executor {
         }
         return new PageFollower();
     }
-    
-     public PageFollower maximize() {
-       driver.manage().window().maximize();
+
+    public PageFollower maximize() {
+        driver.manage().window().maximize();
         return new PageFollower();
     }
 }
