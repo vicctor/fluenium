@@ -120,6 +120,16 @@ public class Executor {
                 );
                 return new Follower(xpath);
             }
+            
+            public Follower matchesValue(final String regexp) {
+                until((ExpectedCondition<Boolean>) (WebDriver d)
+                        -> {
+                    String text = d.findElement(By.xpath(xpath)).getAttribute("value");
+                    return text != null ? d.findElement(By.xpath(xpath)).getAttribute("value").matches(regexp) : regexp == text;                   
+                }
+                );
+                return new Follower(xpath);
+            }
 
             public Follower extsts(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
