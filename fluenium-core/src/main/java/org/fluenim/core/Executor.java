@@ -1,10 +1,10 @@
 package org.fluenim.core;
 
 import com.google.common.base.Function;
-import java.io.Console;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -114,18 +114,26 @@ public class Executor {
             public Follower matches(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
-                    String text = d.findElement(By.xpath(xpath)).getText();
-                    return text != null ? d.findElement(By.xpath(xpath)).getText().matches(regexp) : regexp == text;
+                    try {
+                        String text = d.findElement(By.xpath(xpath)).getText();
+                        return text != null ? d.findElement(By.xpath(xpath)).getText().matches(regexp) : regexp == text;
+                    } catch (StaleElementReferenceException ex) {
+                        return false;
+                    }
                 }
                 );
                 return new Follower(xpath);
             }
-            
+
             public Follower matchesValue(final String regexp) {
                 until((ExpectedCondition<Boolean>) (WebDriver d)
                         -> {
-                    String text = d.findElement(By.xpath(xpath)).getAttribute("value");
-                    return text != null ? d.findElement(By.xpath(xpath)).getAttribute("value").matches(regexp) : regexp == text;                   
+                    try {
+                        String text = d.findElement(By.xpath(xpath)).getAttribute("value");
+                        return text != null ? d.findElement(By.xpath(xpath)).getAttribute("value").matches(regexp) : regexp == text;
+                    } catch (StaleElementReferenceException ex) {
+                        return false;
+                    }
                 }
                 );
                 return new Follower(xpath);
@@ -296,7 +304,14 @@ public class Executor {
     }
 
     public PageFollower maximize() {
-        driver.manage().window().maximize();
+        driver.manage().window().fullscreen();
         return new PageFollower();
     }
+
+    public PageFollower driverLogs() {
+        driver.manage().logs().get("browser");
+        System.out.println();
+        return new PageFollower();
+    }
+
 }
