@@ -308,6 +308,13 @@ public class Executor {
         return new PageFollower();
     }
 
+    public PageFollower setFullHD() {
+        driver.manage().window().setPosition(new Point(0, 0));
+        org.openqa.selenium.Dimension d = new org.openqa.selenium.Dimension(1920, 1080);
+        driver.manage().window().setSize(d);
+        return new PageFollower();
+    }
+
     public PageFollower driverLogs() {
         driver.manage().logs().get("browser");
         System.out.println();
