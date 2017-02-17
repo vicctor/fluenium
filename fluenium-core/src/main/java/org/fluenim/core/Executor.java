@@ -304,7 +304,7 @@ public class Executor {
     }
 
     public PageFollower maximize() {
-        driver.manage().window().fullscreen();
+        driver.manage().window().maximize();
         return new PageFollower();
     }
 
