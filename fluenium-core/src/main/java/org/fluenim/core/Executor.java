@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
